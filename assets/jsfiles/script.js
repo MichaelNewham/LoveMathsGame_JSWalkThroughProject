@@ -13,14 +13,25 @@ document.addEventListener("DOMContentLoaded", function () {
         })
     }
 
+    document.getElementById("answer-box").addEventListener("keydown", function(event) {
+        if (event.key === "Enter") {
+            checkAnswer();
+        }
+    })
+
     runGame("addition");
 });
 
 
 function runGame(gameType) {
 
+    document.getElementById("answer-box").value = "";
+    document.getElementById("answer-box").focus();
+
     let num1 = Math.floor(Math.random() * 25) + 1;
     let num2 = Math.floor(Math.random() * 25) + 1;
+    let divNum1 = num1*num2;
+    let divNum2 = num2;
 
     if (gameType === "addition") {
         displayAdditionQuestion(num1, num2);
@@ -28,6 +39,8 @@ function runGame(gameType) {
         displayMultiplyQuestion(num1, num2);
     } else if (gameType === "subtract") {
         displaySubtractQuestion(num1, num2);
+    } else if (gameType === "division") {
+        displayDivideQuestion(divNum1, divNum2);
     } else {
         alert(`Unknown game type ${gameType}`);
         throw `Unknown game type ${gameType}, aborting!`;
@@ -64,6 +77,8 @@ function calculateRightAnswer() {
         return [operand1 * operand2, "multiply"]
     } else if (operator === "-") {
         return [operand1 - operand2, "subtract"]
+    } else if (operator === "/") {
+        return [operand1 / operand2, "division"]
     } else {
         alert(`Unimplemented operator ${operator}`);
         throw `Unimplemented operator ${operator}, aborting!`;
